@@ -1,0 +1,35 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device.width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <center>
+        <div>
+            <h1>Energy Price in Sweden</h1>
+            <p>The current electricty price in öre per kilowatt hour is {{ price }}. The price is relatively {{ catagory
+                }}. </p>
+        </div>
+    </center>
+    <center>
+        <div class="row">
+            <div class="column">
+                <h2>Energy Prices Today</h2>
+                <img src="static/todayPricePlot.png" />
+            </div>
+            <div class="column">
+                <h2>Energy Price Distribution over 20 Day Intervals</h2>
+                <img src="static/monthCandlestick.png" />
+            </div>
+        </div>
+    </center>
+
+</body>
+
+</html>
