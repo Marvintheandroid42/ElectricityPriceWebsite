@@ -33,14 +33,18 @@ def classify(currentPrice):
 
     preds = mlPipeline.classify(centers, currentPrice)
 
+    print(preds)
     if preds[0] == 0:
-        return "LOW"
+        return "Extremely low"
 
     if preds[0] == 1:
-        return "AVERAGE"
+        return "Lower than average"
 
     if preds[0] == 2:
-        return "HIGH"
+        return "Higher than average"
+    
+    if preds[0] == 3:
+        return "Extremely High"
 
 
 def todayPricePlot():
@@ -57,12 +61,14 @@ def todayPricePlot():
     d = response.json()
 
     plt.style.use("seaborn-darkgrid")
-    plt.plot(today[0], today[2], marker="x", linewidth=1, color="steelblue", alpha=0.75)
-    plt.scatter(x=np.array(today[0])[np.where(preds == 0)], y=np.array(today[2])[np.where(preds == 0)], marker="o", color="green")
-    plt.scatter(x=np.array(today[0])[np.where(preds == 2)], y=np.array(today[2])[np.where(preds == 2)], marker="o", color="red")
+    plt.plot(today[0], today[2], marker="x",
+             linewidth=1, color="steelblue", alpha=0.75)
+    plt.scatter(x=np.array(today[0])[np.where(preds == 0)], y=np.array(
+        today[2])[np.where(preds == 0)], marker="o", color="green")
+    plt.scatter(x=np.array(today[0])[np.where(preds == 2)], y=np.array(
+        today[2])[np.where(preds == 2)], marker="o", color="red")
     plt.xlabel("Hour")
     plt.ylabel("Price in öre")
-    plt.title("Electricty Prices in öre from SE1")
 
     path = r"static"
     os.remove(path + r"\todayPricePlot.png")
@@ -88,16 +94,15 @@ def monthsCandelstick():
         for i in d["SE1"]:
             listVar.append(float(i["price_sek"]))
 
-    fig = plt.figure(figsize = (8,5))
+    fig = plt.figure(figsize=(8, 5))
     ax = fig.add_subplot(111)
     plt.style.use("seaborn-darkgrid")
     plt.boxplot(mat, notch=True, )
 
     ax.set_xticklabels(['20 Days', '40 Days',
-                         '60 Days'])
+                        '60 Days'])
 
     plt.ylabel("Price in öre")
-    plt.title("Electricty Price Distributions across 20 day intervals")
 
     path = r"static"
     try:
@@ -106,6 +111,25 @@ def monthsCandelstick():
         pass
     plt.savefig(path + r"\monthCandlestick.png")
 
-    plt.show()
 
-#Should also plot the predictions and k means for the day?, do all the different electricity streams SE1,2,3,4
+def comparisonPlot():
+    today = mlPipeline.todayData()
+
+    X, Xmean, y = mlPipeline.trainData(
+        mlPipeline.getData(mlPipeline.getDates(5)))
+
+    plt.style.use("seaborn-darkgrid")
+    plt.plot(today[0], today[2], color="steelblue", label="Today's Prices")
+    plt.plot(today[0], Xmean, color="red", label="5 Day Average Price")
+    plt.xlabel(" Hours ")
+    plt.ylabel(" Price in Öre")
+    plt.legend()
+
+    path = r"static"
+    try:
+        os.remove(path + r"\comparisonPlot.png")
+    except:
+        pass
+    plt.savefig(path + r"\comparisonPlot.png")
+
+# Should also plot the predictions and k means for the day?, do all the different electricity streams SE1,2,3,4
