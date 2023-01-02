@@ -12,19 +12,23 @@
 <body>
     <center>
         <div>
-            <h1>Energy Price in Sweden</h1>
-            <p>The current electricty price in öre per kilowatt hour is {{ price }}. The price is relatively {{ catagory
+            <h1> Electricity Prices in Sweden </h1>
+            <p>The current electricty price in öre per kilowatt hour is {{ price }}. The current price comapred to the 5 day average prices is relatively {{ catagory
                 }}. </p>
         </div>
     </center>
     <center>
         <div class="row">
             <div class="column">
-                <h2>Energy Prices Today</h2>
+                <h2>Electricty Prices Today from SE1</h2>
                 <img src="static/todayPricePlot.png" />
             </div>
             <div class="column">
-                <h2>Energy Price Distribution over 20 Day Intervals</h2>
+                <h2>Current Day Electricity Prices Compared to 5 Day Average</h2>
+                <img src="static/comparisonPlot.png" />
+            </div>
+            <div class="column">
+                <h2>Historical Electricity Price Distribution over 20 Day Intervals</h2>
                 <img src="static/monthCandlestick.png" />
             </div>
         </div>
