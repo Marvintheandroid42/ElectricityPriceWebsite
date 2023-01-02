@@ -9,4 +9,6 @@ views = Blueprint(__name__, "views")
 @views.route("/")
 def home():
     scrape.todayPricePlot()
-    return render_template("home.html", price=currentPrice(), catagory=scrape.classify([int(currentPrice())]))
+    scrape.comparisonPlot()
+    scrape.monthsCandelstick()
+    return render_template("home.html", price=round(currentPrice(), 2), catagory=scrape.classify([int(currentPrice())]))
